@@ -100,6 +100,49 @@ const appReducer = (state: AppState, action: Action): AppState => {
 			};
 		}
 
+		case 'EDIT_CARD': {
+			const listItemIndex = state.lists.findIndex(
+				(item) => item.listId === action.payload.listId
+			);
+			const index = state.lists[listItemIndex].cards.findIndex(
+				(item) => item.cardId === action.payload.cardId
+			);
+
+			state.lists[listItemIndex].cards[index].title = action.payload.title;
+			return {
+				...state,
+			};
+		}
+		case 'DELETE_CARD': {
+			const listItemIndex = state.lists.findIndex(
+				(item) => item.listId === action.payload.listId
+			);
+			const index = state.lists[listItemIndex].cards.findIndex(
+				(item) => item.cardId === action.payload.cardId
+			);
+			index !== -1 && (state.lists[listItemIndex].cards || []).splice(index, 1);
+			return {
+				...state,
+			};
+		}
+
+		case 'MOVE_CARD': {
+			const listItemIndex = state.lists.findIndex(
+				(item) => item.listId === action.payload.listId
+			);
+			const targetListIndex = action.payload.moveListId;
+
+			const cardIndex = state.lists[listItemIndex].cards.findIndex(
+				(item) => item.cardId === action.payload.cardId
+			);
+			if (cardIndex !== -1) {
+				const item = state.lists[listItemIndex].cards.splice(cardIndex, 1)[0];
+				state.lists[Number(targetListIndex)].cards.push(item);
+			}
+
+			return { ...state };
+		}
+
 		default: {
 			return state;
 		}
