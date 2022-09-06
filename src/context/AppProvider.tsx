@@ -13,10 +13,35 @@ interface List {
 }
 
 // discriminated union
-type Action = {
-	type: 'ADD_LIST';
-	payload: string;
-};
+type Action =
+	| {
+			type: 'ADD_LIST';
+			payload: string;
+	  }
+	| {
+			type: 'EDIT_LIST';
+			payload: { title: string; listId: string };
+	  }
+	| {
+			type: 'DELETE_LIST';
+			payload: { listId: string };
+	  }
+	| {
+			type: 'ADD_CARD';
+			payload: { title: string; listId: string; columnIndex: number };
+	  }
+	| {
+			type: 'EDIT_CARD';
+			payload: { title: string; cardId: string; listId: string };
+	  }
+	| {
+			type: 'DELETE_CARD';
+			payload: { cardId: string; listId: string };
+	  }
+	| {
+			type: 'MOVE_CARD';
+			payload: { listId: string; cardId: string; moveListId: string };
+	  };
 
 export interface AppState {
 	lists: List[];
@@ -36,6 +61,23 @@ const appReducer = (state: AppState, action: Action): AppState => {
 					...state.lists,
 					{ listId: uniqueId(), title: action.payload, cards: [] },
 				],
+			};
+		}
+
+		case 'ADD_CARD': {
+			const listItemIndex = state.lists.findIndex(
+				(item) => item.listId === action.payload.listId
+			);
+			const index = state.lists[listItemIndex].cards.findIndex(
+				(item) => item.title === action.payload.title
+			);
+			index === -1 &&
+				state.lists[listItemIndex].cards.push({
+					cardId: uniqueId(),
+					title: action.payload.title,
+				});
+			return {
+				...state,
 			};
 		}
 
