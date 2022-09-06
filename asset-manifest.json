@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/trello-clone/static/css/main.7febff4c.css",
-    "main.js": "/trello-clone/static/js/main.89b90cd6.js",
+    "main.css": "/trello-clone/static/css/main.537cf3ba.css",
+    "main.js": "/trello-clone/static/js/main.ba42c5f5.js",
     "static/js/787.385eb0f9.chunk.js": "/trello-clone/static/js/787.385eb0f9.chunk.js",
     "static/media/trello-logo.svg": "/trello-clone/static/media/trello-logo.f7627b3a5abd1a54b73c1f53c656659e.svg",
     "index.html": "/trello-clone/index.html",
-    "main.7febff4c.css.map": "/trello-clone/static/css/main.7febff4c.css.map",
-    "main.89b90cd6.js.map": "/trello-clone/static/js/main.89b90cd6.js.map",
+    "main.537cf3ba.css.map": "/trello-clone/static/css/main.537cf3ba.css.map",
+    "main.ba42c5f5.js.map": "/trello-clone/static/js/main.ba42c5f5.js.map",
     "787.385eb0f9.chunk.js.map": "/trello-clone/static/js/787.385eb0f9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7febff4c.css",
-    "static/js/main.89b90cd6.js"
+    "static/css/main.537cf3ba.css",
+    "static/js/main.ba42c5f5.js"
   ]
 }
