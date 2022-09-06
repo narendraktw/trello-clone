@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Card from './Card';
-import Modalbox from './modalbox/Modalbox';
+import ModalBox from './modalbox/ModalBox';
+import PopOver from './popover/PopOver';
 import { useAppState } from '../context/AppProvider';
 
 interface ColumnProps {
@@ -11,6 +12,7 @@ interface ColumnProps {
 const Column = ({ title, index, listId }: ColumnProps) => {
 	const { state, dispatch } = useAppState();
 	const [showModal, setShowModal] = useState(false);
+	const [showPopOver, setShowPopOver] = useState(false);
 	const [label, setLabel] = useState(title);
 	const [editedList, setEditList] = useState(false);
 
@@ -41,7 +43,10 @@ const Column = ({ title, index, listId }: ColumnProps) => {
 					<div className="list-header">
 						<div className="list-title">{title}</div>
 						<div className="list-action">
-							<button className="dot-button"></button>
+							<button
+								className="dot-button"
+								onClick={() => setShowPopOver(!showPopOver)}
+							></button>
 						</div>
 					</div>
 					{state.lists[index].cards.map((card) => (
@@ -66,7 +71,7 @@ const Column = ({ title, index, listId }: ColumnProps) => {
 					</div>
 				</div>
 				{showModal && (
-					<Modalbox>
+					<ModalBox>
 						<div className="modal-header">
 							<div className="modal-title">
 								{editedList ? 'Edit' : 'Add'} Item
@@ -92,9 +97,25 @@ const Column = ({ title, index, listId }: ColumnProps) => {
 								}}
 							/>
 						</div>
-					</Modalbox>
+					</ModalBox>
 				)}
 			</div>
+			{showPopOver && (
+				<PopOver
+					id={listId}
+					onDelete={(listId) =>
+						dispatch({
+							type: 'DELETE_LIST',
+							payload: { listId: listId },
+						})
+					}
+					onEdit={() => {
+						setShowModal(true);
+						setEditList(true);
+						setShowPopOver(false);
+					}}
+				/>
+			)}
 		</>
 	);
 };

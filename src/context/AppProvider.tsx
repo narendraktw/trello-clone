@@ -64,6 +64,25 @@ const appReducer = (state: AppState, action: Action): AppState => {
 			};
 		}
 
+		case 'EDIT_LIST': {
+			const listItemIndex = state.lists.findIndex(
+				(item) => item.listId === action.payload.listId
+			);
+			state.lists[listItemIndex].title = action.payload.title;
+			return {
+				...state,
+			};
+		}
+		case 'DELETE_LIST': {
+			const index = state.lists.findIndex(
+				(item) => item.listId === action.payload.listId
+			);
+			index !== -1 && (state.lists || []).splice(index, 1);
+			return {
+				...state,
+			};
+		}
+
 		case 'ADD_CARD': {
 			const listItemIndex = state.lists.findIndex(
 				(item) => item.listId === action.payload.listId

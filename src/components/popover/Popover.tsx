@@ -18,8 +18,8 @@ const PopOver = ({ id, onDelete, onEdit }: DeleteItemProps) => {
 	return (
 		<div className="popover__content" onClick={(e) => e.stopPropagation()}>
 			<ul className="popover__list">
-				<li onClick={() => updateItem()}>Edit</li>
-				<li onClick={() => deleteItem()}>Delete</li>
+				<li onClick={updateItem}>Edit</li>
+				<li onClick={deleteItem}>Delete</li>
 			</ul>
 		</div>
 	);

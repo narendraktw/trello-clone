@@ -4,7 +4,7 @@ interface ModalProps {
 	children: React.ReactNode;
 }
 
-const Modalbox = ({ children }: ModalProps) => {
+const ModalBox = ({ children }: ModalProps) => {
 	return (
 		<div className="modal">
 			<div className="modal-content">{children}</div>
@@ -12,4 +12,4 @@ const Modalbox = ({ children }: ModalProps) => {
 	);
 };
 
-export default Modalbox;
+export default ModalBox;

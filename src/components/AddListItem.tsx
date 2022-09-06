@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Modalbox from './modalbox/Modalbox';
+import ModalBox from './modalbox/ModalBox';
 
 interface AddItemProps {
 	onAdd(text: string): void;
@@ -23,7 +23,7 @@ const AddListItem = ({ onAdd, toggleButtonText }: AddItemProps) => {
 				{toggleButtonText}
 			</button>
 			{showModal && (
-				<Modalbox>
+				<ModalBox>
 					<div className="modal-header">
 						<div className="modal-title">Add Item</div>
 						<span className="close" onClick={() => setShowModal(false)}>
@@ -41,7 +41,7 @@ const AddListItem = ({ onAdd, toggleButtonText }: AddItemProps) => {
 						/>
 						<input type="button" value="Save" onClick={() => addItem()} />
 					</div>
-				</Modalbox>
+				</ModalBox>
 			)}
 		</>
 	);
