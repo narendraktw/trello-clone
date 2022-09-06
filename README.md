@@ -1,6 +1,6 @@
 ## Trello Clone - by Narendra Bisht
 
-Demo link:
+App Deployed link: https://narendraktw.github.io/trello-clone
 
 Features:
 
