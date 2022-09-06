@@ -1,0 +1,50 @@
+.popover__title {
+    font-size: 24px;
+    line-height: 36px;
+    text-decoration: none;
+    color: rgb(228, 68, 68);
+    text-align: center;
+    padding: 15px 0;
+}
+
+.popover__content {
+    position: absolute;
+    top: 0px;
+    left: -14px;
+    min-width: 6rem;
+    z-index: 1;
+    border-radius: .375rem;
+    transform: translate(0, 10px);
+    background-color: #ebebeb;
+    padding: 1.5rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    margin: 0px;
+    transform: translate(256px, 44px);
+    padding: 4px;
+
+}
+
+.popover__content:before {
+    position: absolute;
+    content: "";
+
+    top: -8px;
+    border-style: solid;
+    border-width: 0 10px 10px 10px;
+    border-color: transparent transparent #ebebeb transparent;
+    transition-duration: 0.3s;
+    transition-property: transform;
+}
+
+.popover__list {
+    list-style: none;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+}
+
+.popover__list li {
+    padding: 8px;
+    border-bottom: 1px solid lightgrey;
+    cursor: pointer;
+}
