@@ -21,11 +21,11 @@
   margin-inline: 10px;
 }
 
-.column-btn {
+.btn-box {
   margin-left: 15px;
 }
 
-.column-btn button {
+.btn-box button {
   background: #e1dddd;
   border-radius: 0.375rem;
   border: none;
@@ -39,4 +39,53 @@
   line-height: 1.2;
   margin-inline: auto;
   margin-bottom: 5px;
+}
+
+.list {
+  background: #f0f0f0;
+  overflow-y: auto;
+  /* height: calc(100vh - 90px); */
+  padding-bottom: 5px;
+  border-radius: .5rem;
+}
+
+.list-header {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  padding: 0px 12px;
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.list-title {
+  font-weight: bold;
+  font-weight: 12px;
+}
+
+.list-action {
+  position: relative;
+  left: 12px;
+}
+
+.dot-button {
+  border: none;
+  cursor: pointer;
+}
+
+.dot-button:after {
+  content: '\2807';
+  font-size: 22px;
+}
+
+.card {
+  margin: 5px;
+  padding: 10px;
+  min-height: 80px;
+  border-width: 1px px;
+  background: #fff;
+  cursor: pointer;
+  border-radius: .375rem;
+  overflow: auto;
 }

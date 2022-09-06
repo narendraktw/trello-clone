@@ -14,7 +14,7 @@ const Board = () => {
 					index={i}
 				/>
 			))}
-			<div className="column-btn">
+			<div className="btn-box">
 				<AddItem
 					toggleButtonText="+ Add a Column"
 					onAdd={(title) => dispatch({ type: 'ADD_LIST', payload: title })}

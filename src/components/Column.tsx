@@ -1,10 +1,39 @@
-import React from 'react';
+import { useState } from 'react';
+import Card from './Card';
+import Modalbox from './modalbox/Modalbox';
+import { useAppState } from '../context/AppProvider';
+
 interface ColumnProps {
 	listId: string;
 	title: string;
 	index: number;
 }
 const Column = ({ title, index, listId }: ColumnProps) => {
+	const { state, dispatch } = useAppState();
+	const [showModal, setShowModal] = useState(false);
+	const [label, setLabel] = useState(title);
+	const [editedList, setEditList] = useState(false);
+
+	//Add Card Item
+	const addCardItem = () => {
+		setLabel('');
+		dispatch({
+			type: 'ADD_CARD',
+			payload: { title: label, listId: listId, columnIndex: index },
+		});
+		setShowModal(false);
+		setEditList(false);
+	};
+
+	// Edit List Item
+	const editListItem = () => {
+		dispatch({
+			type: 'EDIT_LIST',
+			payload: { listId: listId, title: label },
+		});
+		setShowModal(false);
+	};
+
 	return (
 		<>
 			<div className="column">
@@ -15,7 +44,56 @@ const Column = ({ title, index, listId }: ColumnProps) => {
 							<button className="dot-button"></button>
 						</div>
 					</div>
+					{state.lists[index].cards.map((card) => (
+						<Card
+							cardId={card.cardId}
+							listId={listId}
+							title={card.title}
+							key={card.cardId}
+						/>
+					))}
+					<div className="btn-box">
+						<button
+							className="add-btn"
+							onClick={() => {
+								setShowModal(true);
+								setLabel('');
+								setEditList(false);
+							}}
+						>
+							+ Add a Card
+						</button>
+					</div>
 				</div>
+				{showModal && (
+					<Modalbox>
+						<div className="modal-header">
+							<div className="modal-title">
+								{editedList ? 'Edit' : 'Add'} Item
+							</div>
+							<span className="close" onClick={() => setShowModal(false)}>
+								&times;
+							</span>
+						</div>
+
+						<div className="modal-body">
+							<input
+								type="text"
+								autoFocus
+								value={label}
+								onChange={(e) => setLabel(e.target.value)}
+								placeholder={editedList ? 'Edit Label Name' : 'Add Label Name'}
+							/>
+							<input
+								type="button"
+								value="Save"
+								onClick={() => {
+									editedList ? editListItem() : addCardItem();
+								}}
+							/>
+						</div>
+					</Modalbox>
+				)}
 			</div>
 		</>
 	);
