@@ -1,8 +1,8 @@
 import './modalbox.css';
 
-interface ModalProps {
+type ModalProps = {
 	children: React.ReactNode;
-}
+};
 
 const ModalBox = ({ children }: ModalProps) => {
 	return (

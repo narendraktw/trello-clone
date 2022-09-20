@@ -1,11 +1,11 @@
 import { useAppState } from '../context/AppProvider';
 import UpdateItem from './UpdateItem';
 
-interface CardProps {
+type CardProps = {
 	cardId: string;
 	title: string;
 	listId: string;
-}
+};
 
 const Card = ({ title, cardId, listId }: CardProps) => {
 	const { dispatch } = useAppState();

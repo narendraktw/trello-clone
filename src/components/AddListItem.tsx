@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import ModalBox from './modalbox/ModalBox';
 
-interface AddItemProps {
+type AddItemProps = {
 	onAdd(text: string): void;
 	toggleButtonText: string;
-}
+};
 
 const AddListItem = ({ onAdd, toggleButtonText }: AddItemProps) => {
 	const [showModal, setShowModal] = useState(false);

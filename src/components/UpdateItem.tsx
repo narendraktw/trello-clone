@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import ModalBox from './modalbox/ModalBox';
 import { useAppState } from '../context/AppProvider';
 
-interface UpdateItemProps {
+type UpdateItemProps = {
 	onDelete(): void;
 	onEdit(text: string): void;
 	title: string;
 	listId: string;
 	cardId: string;
-}
+};
 
 const UpdateItem = ({
 	onEdit,
@@ -71,7 +71,7 @@ const UpdateItem = ({
 							Move To: &nbsp;
 							<select value={moveListId} onChange={handleSetMoveListId}>
 								{state.lists.map((list) => (
-									<option value={list.listId} key={list.listId}>
+									<option value={list.id} key={list.id}>
 										{list.title}
 									</option>
 								))}

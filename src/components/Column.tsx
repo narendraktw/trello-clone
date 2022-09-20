@@ -4,11 +4,11 @@ import ModalBox from './modalbox/ModalBox';
 import PopOver from './popover/PopOver';
 import { useAppState } from '../context/AppProvider';
 
-interface ColumnProps {
+type ColumnProps = {
 	listId: string;
 	title: string;
 	index: number;
-}
+};
 const Column = ({ title, index, listId }: ColumnProps) => {
 	const { state, dispatch } = useAppState();
 	const [showModal, setShowModal] = useState(false);
@@ -65,10 +65,10 @@ const Column = ({ title, index, listId }: ColumnProps) => {
 					</div>
 					{state.lists[index].cards.map((card) => (
 						<Card
-							cardId={card.cardId}
+							cardId={card.id}
 							listId={listId}
 							title={card.title}
-							key={card.cardId}
+							key={card.id}
 						/>
 					))}
 					<div className="btn-box">

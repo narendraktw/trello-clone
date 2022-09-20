@@ -1,22 +1,22 @@
 import React, { createContext, ReactNode, useContext, useReducer } from 'react';
-import { uniqueId } from '../utils/utils';
+import { uniqueId, findItemIndexById } from '../utils/utils';
 
-interface Card {
-	cardId: string;
+type Card = {
+	id: string;
 	title: string;
-}
+};
 
-interface List {
-	listId: string;
+type List = {
+	id: string;
 	title: string;
 	cards: Card[];
-}
+};
 
 // discriminated union
 type Action =
 	| {
 			type: 'ADD_LIST';
-			payload: string;
+			payload: { title: string };
 	  }
 	| {
 			type: 'EDIT_LIST';
@@ -43,14 +43,14 @@ type Action =
 			payload: { listId: string; cardId: string; moveListId: string };
 	  };
 
-export interface AppState {
+export type AppState = {
 	lists: List[];
-}
+};
 
-interface AppContextProps {
+type AppContextProps = {
 	state: AppState;
 	dispatch: React.Dispatch<any>;
-}
+};
 
 const appReducer = (state: AppState, action: Action): AppState => {
 	switch (action.type) {
@@ -59,40 +59,34 @@ const appReducer = (state: AppState, action: Action): AppState => {
 				...state,
 				lists: [
 					...state.lists,
-					{ listId: uniqueId(), title: action.payload, cards: [] },
+					{ id: uniqueId(), title: action.payload.title, cards: [] },
 				],
 			};
 		}
 
 		case 'EDIT_LIST': {
-			const listItemIndex = state.lists.findIndex(
-				(item) => item.listId === action.payload.listId
-			);
-			state.lists[listItemIndex].title = action.payload.title;
+			const listIndex = findItemIndexById(state.lists, action.payload.listId);
+			state.lists[listIndex].title = action.payload.title;
 			return {
 				...state,
 			};
 		}
 		case 'DELETE_LIST': {
-			const index = state.lists.findIndex(
-				(item) => item.listId === action.payload.listId
-			);
-			index !== -1 && (state.lists || []).splice(index, 1);
 			return {
 				...state,
+				lists: state.lists.filter((list) => list.id !== action.payload.listId),
 			};
 		}
 
 		case 'ADD_CARD': {
-			const listItemIndex = state.lists.findIndex(
-				(item) => item.listId === action.payload.listId
-			);
-			const index = state.lists[listItemIndex].cards.findIndex(
+			const listIndex = findItemIndexById(state.lists, action.payload.listId);
+
+			const cardIndex = state.lists[listIndex].cards.findIndex(
 				(item) => item.title === action.payload.title
 			);
-			index === -1 &&
-				state.lists[listItemIndex].cards.push({
-					cardId: uniqueId(),
+			cardIndex === -1 &&
+				state.lists[listIndex].cards.push({
+					id: uniqueId(),
 					title: action.payload.title,
 				});
 			return {
@@ -101,42 +95,36 @@ const appReducer = (state: AppState, action: Action): AppState => {
 		}
 
 		case 'EDIT_CARD': {
-			const listItemIndex = state.lists.findIndex(
-				(item) => item.listId === action.payload.listId
-			);
-			const index = state.lists[listItemIndex].cards.findIndex(
-				(item) => item.cardId === action.payload.cardId
+			const listIndex = findItemIndexById(state.lists, action.payload.listId);
+			const index = state.lists[listIndex].cards.findIndex(
+				(item) => item.id === action.payload.cardId
 			);
 
-			state.lists[listItemIndex].cards[index].title = action.payload.title;
+			state.lists[listIndex].cards[index].title = action.payload.title;
 			return {
 				...state,
 			};
 		}
 		case 'DELETE_CARD': {
-			const listItemIndex = state.lists.findIndex(
-				(item) => item.listId === action.payload.listId
+			const listIndex = findItemIndexById(state.lists, action.payload.listId);
+			const index = state.lists[listIndex].cards.findIndex(
+				(item) => item.id === action.payload.cardId
 			);
-			const index = state.lists[listItemIndex].cards.findIndex(
-				(item) => item.cardId === action.payload.cardId
-			);
-			index !== -1 && (state.lists[listItemIndex].cards || []).splice(index, 1);
+			index !== -1 && (state.lists[listIndex].cards || []).splice(index, 1);
 			return {
 				...state,
 			};
 		}
 
 		case 'MOVE_CARD': {
-			const listItemIndex = state.lists.findIndex(
-				(item) => item.listId === action.payload.listId
-			);
+			const listIndex = findItemIndexById(state.lists, action.payload.listId);
 			const targetListIndex = action.payload.moveListId;
 
-			const cardIndex = state.lists[listItemIndex].cards.findIndex(
-				(item) => item.cardId === action.payload.cardId
+			const cardIndex = state.lists[listIndex].cards.findIndex(
+				(item) => item.id === action.payload.cardId
 			);
 			if (cardIndex !== -1) {
-				const item = state.lists[listItemIndex].cards.splice(cardIndex, 1)[0];
+				const item = state.lists[listIndex].cards.splice(cardIndex, 1)[0];
 				state.lists[Number(targetListIndex)].cards.push(item);
 			}
 
@@ -154,19 +142,19 @@ const AppContext = createContext<AppContextProps>({} as AppContextProps);
 const appData: AppState = {
 	lists: [
 		{
-			listId: '0',
+			id: '0',
 			title: 'To Do',
-			cards: [{ cardId: 'lc0', title: 'List1 Card1' }],
+			cards: [{ id: 'lc0', title: 'List1 Card1' }],
 		},
 		{
-			listId: '1',
+			id: '1',
 			title: 'In Progress',
-			cards: [{ cardId: 'lc2', title: 'List2 Card1' }],
+			cards: [{ id: 'lc2', title: 'List2 Card1' }],
 		},
 		{
-			listId: '2',
+			id: '2',
 			title: 'Done',
-			cards: [{ cardId: 'lc3', title: 'List3 Card1' }],
+			cards: [{ id: 'lc3', title: 'List3 Card1' }],
 		},
 	],
 };

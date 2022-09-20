@@ -1,10 +1,10 @@
 import './popover.css';
 
-interface DeleteItemProps {
+type DeleteItemProps = {
 	onDelete(id: string): void;
 	onEdit(id: string): void;
 	id: string;
-}
+};
 
 const PopOver = ({ id, onDelete, onEdit }: DeleteItemProps) => {
 	const deleteItem = () => {
